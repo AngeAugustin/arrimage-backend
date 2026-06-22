@@ -1,0 +1,36 @@
+# Blueprint Render — déployer via Dashboard : New > Blueprint > connecter arrimage-backend
+services:
+  - type: web
+    name: arrimage-api
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_DEBUG
+        value: "0"
+      - key: APP_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: DEFAULT_URI
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_PUBLIC_KEY
+        sync: false
+      - key: JWT_PASSPHRASE
+        value: ""
+      - key: JWT_ACCESS_TOKEN_TTL
+        value: "3600"
+      - key: JWT_REFRESH_TOKEN_TTL
+        value: "86400"
+      - key: JWT_SECURE_COOKIES
+        value: "true"
+      - key: CORS_ALLOW_ORIGIN
+        sync: false
+      - key: SEED_ON_DEPLOY
+        value: "true"

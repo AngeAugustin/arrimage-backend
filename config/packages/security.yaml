@@ -1,0 +1,66 @@
+security:
+    password_hashers:
+        App\Entity\Utilisateur:
+            algorithm: bcrypt
+            cost: 12
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Utilisateur
+                property: username
+
+    firewalls:
+        dev:
+            pattern: ^/(_profiler|_wdt|assets|build)/
+            security: false
+
+        api_login:
+            pattern: ^/api/auth/login
+            stateless: true
+            security: false
+
+        api_refresh:
+            pattern: ^/api/auth/refresh
+            stateless: true
+            security: false
+
+        api_health:
+            pattern: ^/api/health$
+            stateless: true
+            security: false
+
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: app_user_provider
+            user_checker: App\Security\UserChecker
+            custom_authenticators:
+                - App\Security\JwtCookieAuthenticator
+            entry_point: App\Security\JwtCookieAuthenticator
+
+    access_control:
+        - { path: ^/api/health, roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth/refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/api/auth/me, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/auth/logout, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/auth/change-password, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/employeur, roles: ROLE_AGENT1 }
+        - { path: ^/api/saisie/attente, roles: ROLE_AGENT2 }
+        - { path: ^/api/saisie/.*/contresaisie, roles: ROLE_AGENT2 }
+        - { path: ^/api/saisie/.*/correction, roles: [ROLE_AGENT1, ROLE_AGENT2] }
+        - { path: ^/api/saisie/mes-saisies, roles: [ROLE_AGENT1, ROLE_AGENT2] }
+        - { path: ^/api/saisie$, methods: [POST], roles: ROLE_AGENT1 }
+        - { path: ^/api/discordances, roles: [ROLE_CONTROLEUR, ROLE_ADMIN] }
+        - { path: ^/api/consolidation, roles: ROLE_ADMIN }
+        - { path: ^/api/stats, roles: ROLE_ADMIN }
+        - { path: ^/api/audit, roles: ROLE_ADMIN }
+        - { path: ^/api/utilisateurs, roles: ROLE_ADMIN }
+
+when@test:
+    security:
+        password_hashers:
+            App\Entity\Utilisateur:
+                algorithm: bcrypt
+                cost: 4

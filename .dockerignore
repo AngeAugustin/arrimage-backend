@@ -1,0 +1,8 @@
+var/
+vendor/
+.env
+.env.*
+!.env.example
+tests/
+.phpunit.cache/
+login.json
