@@ -20,3 +20,8 @@
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+# Artefacts de tests manuels (curl, export local)
+cookies.txt
+login.json
+ifu_test.xlsx
