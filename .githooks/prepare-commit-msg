@@ -1,0 +1,8 @@
+#!/bin/sh
+# Retire l'attribution automatique Cursor des messages de commit
+if [ -f "$1" ]; then
+  sed -i.bak '/cursoragent@cursor\.com/d' "$1"
+  sed -i.bak '/Co-authored-by: Cursor/d' "$1"
+  sed -i.bak '/Made-with: Cursor/d' "$1"
+  rm -f "$1.bak"
+fi
