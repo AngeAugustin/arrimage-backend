@@ -25,6 +25,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: 'saisie')]
 #[ORM\Index(name: 'idx_saisie_flag', columns: ['flag_consolide'])]
 #[ORM\Index(name: 'idx_saisie_num_cnss', columns: ['num_cnss'])]
+#[ORM\Index(name: 'idx_saisie_agent1_dt', columns: ['agent1_id', 'dt_saisie1'])]
+#[ORM\Index(name: 'idx_saisie_agent2_dt', columns: ['agent2_id', 'dt_saisie2'])]
+#[ORM\Index(name: 'idx_saisie_status', columns: ['status'])]
+#[ORM\Index(name: 'idx_saisie_dt_saisie1', columns: ['dt_saisie1'])]
+#[ORM\Index(name: 'idx_saisie_dt_export', columns: ['dt_export'])]
 class Saisie
 {
     #[ORM\Id]

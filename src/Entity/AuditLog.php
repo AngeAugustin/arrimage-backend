@@ -21,6 +21,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: AuditLogRepository::class)]
 #[ORM\Table(name: 'audit_log')]
+#[ORM\Index(name: 'idx_audit_log_timestamp', columns: ['timestamp'])]
+#[ORM\Index(name: 'idx_audit_log_user_id', columns: ['user_id'])]
+#[ORM\Index(name: 'idx_audit_log_action', columns: ['action'])]
 class AuditLog
 {
     #[ORM\Id]
